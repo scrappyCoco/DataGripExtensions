@@ -26,7 +26,10 @@ def openScript(table) {
 	          "AND SchemaName = '" + schema + "'\n" +
 	          "AND ObjectName = '" + name + "'\n" +
 	          "ORDER BY 1 DESC;"
-    def psiFile = PsiFileFactory.getInstance(PROJECT).createFileFromText(MsDialect.INSTANCE, sql)
-    psiFile.virtualFile.rename(null, "generated_" + UUID.randomUUID().toString().substring(0, 8) + ".sql")
-    ApplicationManager.getApplication().invokeLater { FileEditorManager.getInstance(PROJECT).openFile(psiFile.virtualFile, true)}
+
+    ApplicationManager.getApplication().invokeLater {
+        def psiFile = PsiFileFactory.getInstance(PROJECT).createFileFromText(MsDialect.INSTANCE, sql)
+        psiFile.virtualFile.rename(null, "generated_" + UUID.randomUUID().toString().substring(0, 8) + ".sql")
+        FileEditorManager.getInstance(PROJECT).openFile(psiFile.virtualFile, true)
+    }
 }
