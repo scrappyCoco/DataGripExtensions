@@ -1,0 +1,5 @@
+<template name="try" value="BEGIN TRY&#10;  $SELECTION$&#10;END TRY&#10;BEGIN CATCH&#10;  SELECT ERROR_MESSAGE();&#10;END CATCH" description="surround with try" toReformat="true" toShortenFQNames="true">
+    <context>
+        <option name="SQL_MSSQL" value="true" />
+    </context>
+</template>
