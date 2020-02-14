@@ -1,0 +1,5 @@
+<template name="fxml" value="FOR XML PATH('$END$'), TYPE " description="FOR XML PATH(''), TYPE" toReformat="false" toShortenFQNames="true">
+  <context>
+    <option name="SQL_MSSQL" value="true" />
+  </context>
+</template>

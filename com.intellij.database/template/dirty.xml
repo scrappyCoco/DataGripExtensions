@@ -1,0 +1,5 @@
+<template name="dirty" value="SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;" description="SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;" toReformat="false" toShortenFQNames="true">
+  <context>
+    <option name="SQL_MSSQL" value="true" />
+  </context>
+</template>

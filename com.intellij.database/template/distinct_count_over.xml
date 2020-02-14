@@ -1,0 +1,7 @@
+<template name="distinct_count_over" value="DENSE_RANK() OVER (PARTITION BY $partition_column$ ORDER BY $order_column$)&#10;+ DENSE_RANK() OVER (PARTITION BY $partition_column$ ORDER BY $order_column$ DESC)&#10;- 1" description="COUNT(DISTINCT MyColumn) OVER (PARTITION BY MyPartColumn)" toReformat="true" toShortenFQNames="true">
+  <variable name="partition_column" expression="completeSmart()" defaultValue="&quot;MyPartitionColumn&quot;" alwaysStopAt="true" />
+  <variable name="order_column" expression="completeSmart()" defaultValue="&quot;MyOrderColumn&quot;" alwaysStopAt="true" />
+  <context>
+    <option name="SQL_MSSQL" value="true" />
+  </context>
+</template>

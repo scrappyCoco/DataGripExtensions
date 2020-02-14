@@ -1,5 +1,5 @@
-<template name="foff" value="-- @formatter:off&#10;$SELECTION$&#10;-- @formatter:onn" description="disable formatting" toReformat="false" toShortenFQNames="true">
-    <context>
-        <option name="SQL_MSSQL" value="true" />
-    </context>
+<template name="foff" value="-- @formatter:off&#10;$SELECTION$&#10;-- @formatter:on" description="Disable formatting" toReformat="false" toShortenFQNames="true">
+  <context>
+    <option name="SQL_MSSQL" value="true" />
+  </context>
 </template>

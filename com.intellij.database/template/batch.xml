@@ -1,10 +1,8 @@
-<template name="batch" value="DECLARE @snapshot TABLE (&#10;    $pk_column$ $pk_type$ NOT NULL PRIMARY KEY&#10;);&#10;DECLARE @batch TABLE (&#10;    $pk_column$ $pk_type$ NOT NULL PRIMARY KEY&#10;);&#10;DECLARE @maxId $pk_type$ = 0;&#10;&#10;INSERT INTO @snapshot ($pk_column$)&#10;SELECT $source_column$&#10;FROM $SELECTION$;&#10;&#10;WHILE 1 = 1&#10;BEGIN&#10;    BEGIN TRY&#10;        INSERT INTO @batch ($pk_column$)&#10;        SELECT TOP 500 $pk_column$&#10;        FROM @snapshot&#10;        WHERE $pk_column$ &gt; @maxId&#10;        ORDER BY $pk_column$ ASC;&#10;&#10;        IF @@ROWCOUNT = 0 BREAK&#10;&#10;        -- TODO: act with batch there.&#10;&#10;        SELECT @maxId = MAX($pk_column$)&#10;        FROM @batch;&#10;&#10;        DELETE @batch;&#10;    END TRY&#10;    BEGIN CATCH&#10;        SELECT ERROR_MESSAGE = ERROR_MESSAGE();&#10;        BREAK;&#10;    END CATCH&#10;END" description="Something like cursor but it use batches" toReformat="true" toShortenFQNames="true">
+<template name="batch" value="DECLARE @snapshot TABLE ($pk_column$ $pk_type$ NOT NULL PRIMARY KEY);&#10;DECLARE @batch TABLE ($pk_column$ $pk_type$ NOT NULL PRIMARY KEY);&#10;DECLARE @maxId $pk_type$ = 0;&#10;&#10;INSERT INTO @snapshot ($pk_column$)&#10;SELECT $source_column$&#10;FROM $SELECTION$;&#10;&#10;WHILE 1 = 1&#10;BEGIN&#10;    BEGIN TRY&#10;        INSERT INTO @batch ($pk_column$)&#10;        SELECT TOP 500 $pk_column$&#10;        FROM @snapshot&#10;        WHERE $pk_column$ &gt; @maxId&#10;        ORDER BY $pk_column$ ASC;&#10;&#10;        IF @@ROWCOUNT = 0 BREAK;&#10;&#10;        -- TODO: act with the batch there.&#10;&#10;        SELECT @maxId = MAX($pk_column$)&#10;        FROM @batch;&#10;&#10;        DELETE @batch;&#10;    END TRY&#10;    BEGIN CATCH&#10;        SELECT ERROR_MESSAGE = ERROR_MESSAGE();&#10;        BREAK;&#10;    END CATCH&#10;END" description="Something like cursor but it use batches" toReformat="true" toShortenFQNames="true">
   <variable name="source_column" expression="complete()" defaultValue="&quot;MyColumnName&quot;" alwaysStopAt="true" />
   <variable name="pk_type" expression="complete()" defaultValue="&quot;INT&quot;" alwaysStopAt="true" />
   <variable name="pk_column" expression="source_column" defaultValue="&quot;MyColumnName&quot;" alwaysStopAt="true" />
   <context>
-    <option name="SQL_STATEMENT" value="true" />
-    <option name="SQL_STATEMENT_AZURE" value="true" />
-    <option name="SQL_STATEMENT_MSSQL" value="true" />
+    <option name="SQL_MSSQL" value="true" />
   </context>
 </template>
