@@ -1,4 +1,7 @@
 <template name="paging" value="OFFSET $offset$ ROWS FETCH NEXT $limit$ ROWS ONLY" toReformat="false" toShortenFQNames="true">
   <variable name="offset" expression="" defaultValue="0" alwaysStopAt="true" />
   <variable name="limit" expression="" defaultValue="10" alwaysStopAt="true" />
+  <context>
+    <option name="SQL_MSSQL" value="true" />
+  </context>
 </template>
