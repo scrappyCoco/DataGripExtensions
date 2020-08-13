@@ -17,15 +17,26 @@ import com.intellij.openapi.application.ApplicationManager
 SELECTION.each { openScript(it) }
 
 def openScript(table) {
-	def db = DasUtil.getCatalog(table)
+	def db     = DasUtil.getCatalog(table)
 	def schema = DasUtil.getNamespace(table).name
-	def name = DasUtil.getName(table)
-	def sql = "SELECT *\n" +
-	          "FROM HistoryCode.dbo.EventsLog WITH (NOLOCK)\n" +
-	          "WHERE DatabaseName = '" + db + "'\n" +
-	          "AND SchemaName = '" + schema + "'\n" +
-	          "AND ObjectName = '" + name + "'\n" +
-	          "ORDER BY 1 DESC;"
+	def name   = DasUtil.getName(table)
+	
+	def sql    = "SELECT IndedxName       = indexes.name,\n" +
+				 "	   AvgFragmentation = stat.avg_fragmentation_in_percent,\n" +
+				 "	   AvgPageUsage     = stat.avg_page_space_used_in_percent,\n" +
+				 "	   UnitType         = stat.alloc_unit_type_desc,\n" +
+				 "       IndexLevel       = stat.index_level\n" +
+				 "FROM " + db + ".sys.schemas\n" +
+				 "INNER JOIN " + db + ".sys.objects ON schemas.schema_id = objects.schema_id\n" +
+				 "INNER JOIN " + db + ".sys.indexes ON indexes.object_id = objects.object_id\n" +
+				 "OUTER APPLY " + db + ".sys.dm_db_index_physical_stats(\n" +
+				 "    DB_ID(N'" + db + "'),\n" +
+				 "    objects.object_id,\n" +
+				 "    indexes.index_id,\n" +
+				 "    NULL,\n" +
+				 "    NULL\n" +
+				 ") AS stat\n" +
+				 "WHERE objects.name = '" + name + "' AND schemas.name = '" + schema + "'\n"
 
     ApplicationManager.getApplication().invokeLater {
         def psiFile = PsiFileFactory.getInstance(PROJECT).createFileFromText(MsDialect.INSTANCE, sql)

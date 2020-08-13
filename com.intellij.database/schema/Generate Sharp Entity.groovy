@@ -11,10 +11,11 @@ import com.intellij.database.util.DasUtil
 
 packageName = "com.sample"
 typeMapping = [
-  (~/(?i)int/)                      : "long",
-  (~/(?i)float|double|decimal|real/): "double",
-  (~/(?i)datetime|timestamp|date/)  : "DateTime",
-  (~/(?i)time/)                     : "TimeSpan",
+  (~/(?i)int/)                      : "long?",
+  (~/(?i)bit/)                      : "bool?",
+  (~/(?i)float|double|decimal|real/): "double?",
+  (~/(?i)datetime|timestamp|date/)  : "DateTime?",
+  (~/(?i)time/)                     : "TimeSpan?",
   (~/(?i)/)                         : "string"
 ]
 
